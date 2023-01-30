@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.writeDAO">
+
+	<select id="weatherlist" resultType="com.gudi.project.dto.WeatherDTO">
+		SELECT weather_name, weather_num
+			FROM weather ORDER BY weather_num 
+	</select>
+	<select id="colorlist" resultType="com.gudi.project.dto.ColorDTO">
+		SELECT color_name
+			FROM color ORDER BY color_num
+	</select>
+	<select id="toplist" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth where cloth_type = '상의' ORDER BY cloth_num 
+	</select>
+	
+	<select id="bottomlist" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth where cloth_type = '하의' ORDER BY cloth_num 
+	</select>
+	<select id="outerlist" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth where cloth_type = '아우터' ORDER BY cloth_num 
+	</select>
+	<select id="dresslist" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth where cloth_type = '원피스' ORDER BY cloth_num 
+	</select>
+	<select id="shoeslist" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth where cloth_type = '신발' ORDER BY cloth_num 
+	</select>
+	
+  	<select id="list" resultType="com.gudi.project.dto.ClothDTO">
+		SELECT cloth_num, cloth_name
+			FROM cloth ORDER BY cloth_num 
+	</select>  
+
+
+	<insert id="write" 
+		useGeneratedKeys="true"
+		keyColumn="board_num"
+		keyProperty="board_num"
+		parameterType="com.gudi.project.dto.WriteDTO">	
+		INSERT INTO post(board_place, board_date, mem_num, sortcode, weather_num, top_num, outer_num, 
+							bottom_num, shoes_num, dress_num, top_color,bottom_color,outer_color,dress_color,shoes_color,board_state)
+			VALUES (#{board_place},#{board_date}, (select mem_num  from member where mem_email = #{mem_num}), #{sortcode}, #{weather_num}, #{top_num},#{outer_num},
+						#{bottom_num},#{shoes_num},#{dress_num},#{top_color},#{bottom_color},#{outer_color},#{dress_color},#{shoes_color},1)
+			
+	</insert>
+	
+	
+	<insert id="fileWrite" >
+		INSERT INTO post_pho(board_num, photo_name, newPhoto_name) 
+			VALUES (#{param1},#{param2},#{param3})
+	</insert>
+	
+	<!-- useGeneratedKeys 때문에 detail에 해야하는데 여기 있는 애들 -->
+	
+	<select id="fileList" parameterType="String" 
+	resultType="com.gudi.project.dto.PhotoDTO">
+		SELECT * FROM post_pho WHERE board_num = #{board_num}
+	</select>
+	
+<!-- 	<select id="w_detail" resultType="com.gudi.project.dto.WeatherDTO"
+	parameterType="String">
+		SELECT weather_name FROM weather WHERE weather_num = (select weather_num 
+												from post 
+												where board_num = #{board_num}) 
+	</select> -->
+	
+	
+	
+	
+	
+<!-- 	<insert id="clothWrite"
+	useGeneratedKeys="true"
+		keyProperty="cloth_num"
+	 	parameterType="com.gudi.project.dto.ClothDTO">
+		INSERT INTO cloth(top_num, bottom_num) 
+			VALUES (#{top_num},#{bottom_num})
+	</insert> -->
+
+	<!-- <insert id="outfitWrite" 
+	useGeneratedKeys="true"
+	parameterType="com.gudi.project.dto.OutfitDTO">
+		INSERT INTO outfit(cloth_num)
+			(SELECT cloth_num
+			FROM cloth
+			WHERE cloth_num = #{cloth_num})
+	</insert> -->
+	
+</mapper>

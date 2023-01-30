@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.listDAO">
+
+	<select id="photoList" resultType="com.gudi.project.dto.WriteDTO">
+		SELECT board_num, board_place
+			FROM post where board_state = 1 ORDER BY board_num 
+	</select>
+</mapper>

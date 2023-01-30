@@ -1,0 +1,247 @@
+*{
+    margin:0; padding:0;
+    box-sizing: border-box;
+}
+
+button{
+    background-color: transparent;
+    border:none;
+}
+
+body{
+    width:100%; height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.writeWrap{
+    width:1200px; height:700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.writeHeader{
+    width:100%; height:50px;
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo>a>img{ /*헤더에 옷걸이같은 애*/
+    width:100px; height:60px;
+    background-color: none;
+}
+.writeMain{
+    width:100%; height:650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*왼쪽 영역*/
+.writeAreaImg{
+    width:50%; height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.writeImg{
+    width:430px; height:600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.writeImgHeader{
+    width:100%; height:50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border:1px solid #333333;
+}
+.writeImgHeaderLeft{
+    width:300px; height:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* .delete_btn{
+	position: absolute;
+	top: 677px;
+	left: 626px;
+} */
+.delete_btn>img{
+	position: absolute;
+	width:25px;
+	height:25px;
+	top: 677px;
+	left: 615px;
+}
+.writeImgHeaderLeft>img{ 
+    width:50px; height:50px;
+    background-color: none;
+}
+.writeImgHeaderLeft>p{
+    width: auto;
+    font-size:16px;
+    color:#333333;
+}
+.writeImgHeaderRight{
+    width:80px; height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.writeImgHeaderRight>p{
+    font-size:12px;
+    color:#737373;
+}
+
+.writeImgMain{
+    width:100%; height:550px;
+    border-right:1px solid #333333;
+    border-left:1px solid #333333;
+    border-bottom:1px solid #333333;
+}
+.writeImgMain>div>img{
+    width:100%; height:100%;
+}
+
+
+/*오른쪽 영역*/
+.writeAreaComment{
+    width:50%; height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.commentArea{
+    width:100%; height:600px;
+    border: 1px solid #333333;
+}
+.commentArea>div{
+    border-bottom:1px solid #333333;
+}
+.commentWeather{
+    width:100%; height:70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.commentWeather>img{
+    width:70px; height:100%;
+    background-color: black;
+    margin-left:20px;
+}
+.commentWeather>p{
+    font-size:36px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+.commentTag{
+    width:100%; height:70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.commentTag>div{
+    width:90%; height:40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.commentTag>div>p{
+    font-size:16px;
+    color:#333333;
+}
+.tagWeight{
+    margin-left: 10px;
+}
+.tagPlace{
+    width:90%; height:40%;
+    font-size:16px;
+    color:#333333
+}
+.commentCheck{
+    width:100%; height:50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.commentReport{
+    width:50px; height:50px;
+    background-color: none;
+    margin-left: 10px;
+}
+.commentCheck>div{
+    width:130px; height:100%;
+    display: flex;
+    justify-content: space-around;
+}
+.commentCheck>div>div{
+    width:50px; height:50px;
+    position:relative;
+}
+.commentBook{
+    width:100%; height:100%;
+    background-color: none;
+}
+.commentLike{
+    width:100%; height:100%;
+    background-color: none;
+}
+
+.commentLikeActive{
+    width:100%; height:100%;
+    position:absolute;
+    top:0; left:0;
+    background-color: none;
+    display: none;
+}
+.commentBookActive{
+    width:100%; height:100%;
+    position:absolute;
+    top:0; left:0;
+    background-color: none;
+    display: none;
+}
+.likeCount{
+    width:100%; height:20px;
+    display: flex;
+    justify-content: flex-end;
+}
+.likeCount>p{
+    width: 60px;
+    text-align:center;
+    font-size:12px;
+    color:#333333;
+}
+.commentInput{
+    width:100%; height:90px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.commentWrite{
+    width:500px; height:50px;
+    font-size:20px;
+    color:#333333;
+}
+.commentButton{
+    width:70px; height:50px;
+    border-radius: 20px;
+    background-color: none;
+    font-size:20px;
+}
+
+.commentView{
+    width:100%; height:300px;
+    overflow-y: scroll;
+    background-color: none;
+}
+.commentView>c{
+    width:100%; height:100px;
+    border-bottom: 1px solid #333333;
+}

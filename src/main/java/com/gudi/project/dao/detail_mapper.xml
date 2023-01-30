@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.detailDAO">
+
+
+	<select id="detail" 
+	resultType="com.gudi.project.dto.WriteDTO"
+	parameterType="String"
+	>
+		SELECT * FROM post WHERE board_num = #{board_num}
+	</select>
+	
+<!-- 	<select id="fileList" parameterType="com.gudi.project.dto.PhotoDTO" 
+	resultType="String">
+		SELECT * FROM photo WHERE board_num = #{board_num}
+	</select> -->
+	
+	<select id="w_detail" resultType="com.gudi.project.dto.WeatherDTO"
+	parameterType="String">
+		SELECT weather_name FROM weather WHERE weather_num = (select weather_num 
+												from post 
+												where board_num = #{board_num}) 
+	</select>
+	
+	<select id="m_detail" resultType="com.gudi.project.dto.MemberDTO"
+	parameterType="String">
+		SELECT mem_nickname FROM member WHERE mem_num = (select mem_num 
+												from post 
+												where board_num = #{board_num}) 
+	</select>
+	
+	<select id="p_detail" resultType="com.gudi.project.dto.ProfileDTO"
+	parameterType="String">
+		SELECT * FROM profile WHERE mem_num = (select mem_num 
+												from post 
+												where board_num = #{board_num}) 
+	</select>
+	
+	<select id="profileList" resultType="com.gudi.project.dto.Pro_photoDTO"
+	parameterType="String">
+		SELECT * FROM pro_photo WHERE mem_num = (select mem_num 
+												from post 
+												where board_num = #{board_num}) 
+	</select>
+	
+<!-- 	<select id="b_Like" resultType="com.gudi.project.dto.Like_listDTO"
+	parameterType="String">
+		SELECT * FROM like_list WHERE mem_num = #{mem_num}
+	</select> -->
+	
+<!-- 	<update id="Like_chk" parameterType="String">
+		update post set board_good = board + 1 where board_num = #{board_num}
+	</update> -->
+	
+	<insert id="Like_chk" parameterType="String">
+		INSERT INTO like_list(mem_num,board_num,like_state)
+			VALUES((select mem_num from member where mem_email = #{mem_num}),#{board_num},1)
+	</insert>
+	
+<!-- 	<select id="findLike" resultType="int"
+	parameterType="String">
+		select count(*) from like_list 
+			where board_num = #{board_num}  and mem_num = #{mem_num};
+	</select> -->
+	
+	<update id="delete" parameterType="String">
+		update post set board_state = '삭제' WHERE board_num = #{board_num}
+	</update>
+	
+	<update id="Like_up" parameterType="String">
+		update post set board_good = board_good+1 WHERE board_num = #{board_num}
+	</update>
+	
+	<select id="like_list" resultType="int">
+	SELECT count(like_state) FROM like_list 
+	WHERE mem_num = (select mem_num from member where mem_email = #{param1}) 
+	and board_num = #{param2} and like_state=1
+	</select>
+	
+	<update id="Like_down" parameterType="String">
+		update post set board_good = board_good-1 WHERE board_num = #{board_num}
+	</update>
+
+	<delete id="Like_nochk" parameterType="String">
+		delete from like_list 
+			WHERE mem_num = (select mem_num from member where mem_email = #{mem_num}) 
+			and board_num = #{board_num} and like_state=1
+	</delete>
+	
+	<insert id="Book_chk" parameterType="String">
+		INSERT INTO book_list(mem_num,board_num)
+			VALUES((select mem_num from member where mem_email = #{mem_num}),#{board_num})
+	</insert>
+	
+	<delete id="Book_nochk" parameterType="String">
+		delete from book_list 
+			WHERE mem_num = (select mem_num from member where mem_email = #{mem_num}) 
+			and board_num = #{board_num}
+	</delete>
+	
+	<select id="book_list" resultType="int">
+	SELECT count(*) FROM book_list 
+	WHERE mem_num = (select mem_num from member where mem_email = #{param1}) 
+	and board_num = #{param2}
+	</select>
+	
+	<select id="commentDetail" resultType="com.gudi.project.dto.CommentDTO">
+		SELECT * from comment where board_num = #{param1}
+	</select>
+	
+	<insert id="commentAdd">
+		INSERT INTO comment(comt_num,comt_time,comt_state,board_num,mem_num,comt_content,newComt_time)
+			VALUES(nextval(comment_seq),curtime(),1,#{param1},#{param2},#{param3},curtime())
+	</insert>
+	
+	<select id = "mem_nick" resultType="com.gudi.project.dto.MemberDTO">
+		select mem_nickname  from member  
+		where mem_num = (select distinct mem_num from comment where mem_num = #{mem_num} and board_num = #{board_num} );
+	</select>
+	
+	<update id="commentUpdate">
+		update comment SET comt_content = #{param2} ,comt_time = curtime() where comt_num = #{param1}
+	</update>
+	
+	<delete id="del">
+		delete from comment WHERE comt_num = #{param1} 
+	</delete>
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+
+</mapper>

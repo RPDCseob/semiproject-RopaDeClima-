@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.profileDAO">
+   <!-- 한 곳에 쓰지 말고 기능별로 분리 
+   ex) 메인 = main_mapper.xml + mainDAO 프로필 = profile_mapper.xml + ProfileDAO -->
+   
+   <select id="profile" resultType="com.gudi.project.dto.ProfileDTO" parameterType="String">
+      SELECT * FROM profile WHERE mem_num=(select mem_num  from member where mem_email = #{mem_num})
+   </select>
+   
+   <select id="fileList" parameterType="String" resultType="com.gudi.project.dto.Pro_photoDTO">
+      SELECT *FROM pro_photo WHERE mem_num=(select mem_num  from member where mem_email = #{mem_num})
+   </select>
+   
+   <update id="fileWrite" parameterType="String">
+      UPDATE pro_photo SET pho_name=#{param2}, chan_name=#{param3}
+      WHERE mem_num = (select mem_num  from member where mem_email = #{param1})
+   </update> 
+   
+   <update id="edit" 
+      useGeneratedKeys="true" 
+      keyColumn="board_num"
+      keyProperty="board_num" 
+      parameterType="com.gudi.project.dto.ProfileDTO">
+      UPDATE profile SET 
+      height=#{height}
+      , weight=#{weight}
+      WHERE mem_num = (select mem_num from member where mem_email = #{mem_num})
+   </update>
+   
+    <update id="tal" parameterType="String">
+      UPDATE member SET mem_ban=1
+      WHERE mem_num = (select mem_num  from member where mem_email = #{mem_num})
+   </update> 
+   
+   <select id="post_phoList" parameterType="String" resultType="com.gudi.project.dto.PhotoDTO">
+      SELECT * FROM post_pho WHERE board_num IN (SELECT board_num FROM post WHERE mem_num = (select mem_num  from member where mem_email = #{mem_num}));
+   </select>
+   
+   <select id="post_likeList" parameterType="String" resultType="com.gudi.project.dto.PhotoDTO">
+      SELECT * FROM post_pho WHERE board_num IN (SELECT board_num FROM like_list WHERE mem_num = (select mem_num  from member where mem_email = #{mem_num}));
+   </select>
+   
+   <select id="post_bookList" parameterType="String" resultType="com.gudi.project.dto.PhotoDTO">
+      SELECT * FROM post_pho WHERE board_num IN (SELECT board_num FROM book_list WHERE mem_num = (select mem_num  from member where mem_email = #{mem_num}));
+   </select>
+   
+   <select id="list" 
+      resultType="com.gudi.project.dto.CommentDTO">
+      SELECT * FROM comment WHERE mem_num in (select mem_num  from member where mem_email = #{mem_num}) ORDER BY comt_num DESC limit 10 offset #{param1}
+   </select>
+   
+   <select id="totalCount" resultType="int">
+      SELECT COUNT(comt_num) FROM comment
+   </select>
+   
+   <select id="nick" parameterType="String" resultType="com.gudi.project.dto.MemberDTO">
+      SELECT *FROM member WHERE mem_num=(select mem_num  from member where mem_email = #{mem_num})
+   </select>
+   
+   <select id="post" parameterType="String" resultType="com.gudi.project.dto.WriteDTO">
+      SELECT * FROM post WHERE board_num = #{board_num}
+   </select>
+   
+   
+   
+   
+   
+   </mapper>
+
+   
+   
+   
+   
+   
+   

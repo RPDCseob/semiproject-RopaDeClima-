@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.DAOFilter">
+
+<select id="submit" resultType="java.util.HashMap" parameterType="hashmap"> 
+   select DISTINCT m.mem_nickname, pp.newPhoto_name
+   from post p, member m, weather w, post_pho pp, outfit o
+   where m.mem_num = p.mem_num and w.weather_num=p.weather_num and p.board_num =o.board_num=pp.board_num
+   <if test="SEX != null">
+      and m.mem_sex in
+      <foreach collection="SEX" item = "sexArr" open="(" close=")" separator=",">
+         #{sexArr}
+      </foreach>   
+   </if>
+   <if test="WEATHER != null">
+      and w.weather_num in
+      <foreach collection="WEATHER" item = "weatherArr" open="(" close=")" separator=",">
+         #{weatherArr}
+      </foreach>
+   </if>
+   <if test="SEASON != null">
+      and ceil(substr(p.board_date, 6, 2)/3) in
+      <foreach collection="SEASON" item = "seasonArr" open="(" close=")" separator=",">
+         #{seasonArr}
+      </foreach>
+   </if>
+   <if test="AGE != null">
+      <![CDATA[and (truncate(ROUND((TO_DAYS(NOW()) - (TO_DAYS(m.mem_birth))) / 365),-1)/10) in]]>
+      <foreach collection="AGE" item = "ageArr" open="(" close=")" separator=",">
+         #{ageArr}
+      </foreach>
+   </if>
+   <if test="TERM != null">
+      <![CDATA[and ((year(now())-year(board_date))*12+month(now())-month(board_date)) <=]]>
+      <foreach collection="TERM" item = "termArr" open="(" close=")" separator=",">
+         #{termArr}
+      </foreach>
+   </if>
+   
+   <if test="TOP != null">         
+      and cloth_num in
+      <foreach collection="TOP" item = "topArr" open="(" close=")" separator=",">
+         #{topArr}
+      </foreach>
+   </if>
+</select>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    <select id="weatherlist" resultType="com.gudi.project.dto.WeatherDTO">
+      SELECT weather_num, weather_name
+      FROM weather where weather_state='1'
+   </select>
+   <select id="toplist" resultType="com.gudi.project.dto.ClothDTO">
+      SELECT cloth_num, cloth_name
+      FROM cloth where cloth_state='1'
+   </select>
+</mapper>

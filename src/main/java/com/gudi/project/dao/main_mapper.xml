@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="com.gudi.project.dao.MainDAO">
+	<select id="recommend" resultType="com.gudi.project.dto.MainDTO">
+		select pp.newPhoto_name,pp.board_num from post p , post_pho pp where pp.board_num = p.board_num and (p.board_tmn between #{param1} - 1 and #{param1} + 1)and(p.board_tmx between #{param2} - 1 and #{param2} + 1) and p.board_state ='정상'
+	</select> 
+	
+	<select id="allShow" resultType="com.gudi.project.dto.MainDTO">
+		select pp.newPhoto_name, pp.board_num from post_pho pp, post p where pp.board_num =p.board_num and p.board_state ='정상'
+	</select>
+	
+	
+	<select id="newOrder" resultType="com.gudi.project.dto.MainDTO">
+		select newphoto_name, pp.board_num from post p, post_pho pp where p.board_num=pp.board_num and p.board_state ='정상' order by board_time desc
+	</select>
+	
+	<select id="like" resultType="com.gudi.project.dto.MainDTO">
+		select newphoto_name, pp.board_num from post p, post_pho pp where p.board_num=pp.board_num and p.board_state ='정상' order by board_good desc
+	</select>
+	
+<!-- 	<select id="fileList" parameterType="com.gudi.project.dto.PhotoDTO" 
+	resultType="String">
+		SELECT newPhoto_name FROM post_pho 
+	</select> -->
+
+
+</mapper>
